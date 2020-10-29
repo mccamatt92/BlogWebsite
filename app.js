@@ -2,6 +2,7 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const _ = require("lodash");
 const ejs = require("ejs");
 let posts =[];
 
@@ -47,7 +48,20 @@ app.post("/compose",function(req,res)
 })
 
 
+app.get("/posts/:postName",function(req,res){
+  const title= _.toLower(req.params.postName);
 
+    posts.forEach(function(post){
+      const storedTitle = _.toLower(post.title);
+
+      if(title === storedTitle)
+      {
+        res.render("post", { title: post.title, content: post.content })
+      }
+
+    })
+
+})
 
 
 
